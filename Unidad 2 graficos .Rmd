@@ -766,7 +766,7 @@ plot_ly(data = iris, x = ~Sepal.Length, y = ~Petal.Length,
 
 Las sintaxis es un poco diferente a lo que veníamos viendo para `ggplot2` pero conserva alguna lógica. Como vemos necesitamos definir el dataframe con los datos, que variable se mapean en cada eje y en `type` el tipo de gráfico o geometría que queremos utilizar y con `name` los subgrupos.
 
-Una opción para convertir nuestro gráfico hecho en `ggplot2` en una visualización interactiva es usando la función de `ggplotly()`. Funciona bien para visualizaciones simples y con pocos layers. Hagamos el mismo gráfico anterior primero en `ggplot2` y luego convirtamoslo en `plotly`:
+Una opción para convertir nuestro gráfico hecho en `ggplot2` en una visualización interactiva es usando la función de `ggplotly()`. Funciona bien para visualizaciones simples y con pocos layers. Hagamos el mismo gráfico anterior primero en `ggplot2` y luego convertimos en `plotly`:
 
 ```{r}
 # gráfico ggplot
@@ -776,7 +776,7 @@ plt <- ggplot(data = iris) +
 plt
 ```
 
-Conversión a plotly
+Conversión a plotly 
 
 ```{r}
 ggplotly(plt)
