@@ -19,7 +19,7 @@ knitr::include_graphics("Fig/Diapositiva 2_TP.JPG")
 
 # Ejercicios gráficos ggplot2
 
-## Base de datos
+## Base de datos excel
 
 **Ejemplo Gran Chaco deforestación**
 Esta base de datos se encuentra en:http://data.globalforestwatch.org
