@@ -1,3 +1,5 @@
+
+# Comando ggplot2
 # Sólamente el paquete ggplot2
 #install.packages("ggplot2")
 
@@ -174,7 +176,7 @@ ggplot(data = iris) +
        title = "Densidades")
 
 
-### Graficos de barras o columnas
+### Gráficos de barras o columnas
 
 #`geom_bar()` y `geom_col()`. 
 # La diferencia radica en el tipo de `stat` que se calcula y representa en la altura de las barras. 
@@ -202,7 +204,7 @@ ggplot(data = iris) +
        x = "Especie")
 
 
-### Graficos medias e intervalos
+### Gráficos medias e intervalos
 
 library(dplyr)
 meds_sd <- group_by(iris, Species) %>% 

@@ -27,7 +27,7 @@ El monitoreo de la deforestación en el Gran Chaco se ha llevado a cabo por la o
 
 Lea y describa los datos chaco.xlsx, identifique que variables tiene y de que tipo, describa la variables superficie usando una tabla de frecuencias.(ayuda: busca en la `library(agricolae)` como realizar una tabla de frecuencia) [Manual agricolae](https://coesincelejo.files.wordpress.com/2011/01/manualpracticoagricolae.pdf)
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 library(readxl)
 library(agricolae)
 chaco <- read_excel("chaco.xlsx")
