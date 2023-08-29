@@ -15,13 +15,16 @@ library(ggplot2)
 knitr::include_graphics("Fig/Diapositiva 2_TP.JPG")
 ```
 
-# Ejercicios gráficos ggplot2
+# Visualización de datos con ggplot2 (Ejercicios Unidad 2)
 
 ## Base de datos
 
-**Ejemplo Gran Chaco deforestación** Esta base de datos se encuentra en:<http://data.globalforestwatch.org> La base de datos describe la perdida de cobertura de los bosques secos tropicales de la región del Gran Chaco en Paraguay, Argentina y Bolivia.
+**Gran Chaco deforestación** 
+Archivo _chaco.xlsx_
 
-El monitoreo de la deforestación en el Gran Chaco se ha llevado a cabo por la organización [Guyra Paraguay] desde el año 2011 (<http://www.guyra.org.py/index.php?lang=en>). Se utilizaron imágenes satelitales Landsat de 30 metros de resolución espacial. La interpretación de las zonas forestales bajo cambios de tipo de cobertura, se realiza a través de un análisis multitemporal. Este compara una imagen base de los últimos dos años y una imagen actual del mes en estudio. Los analistas utilizan técnicas de interpretación visual de tono, forma, tamaño, textura, patrón, sombra, y el contexto.
+Esta base de datos se encuentra en http://data.globalforestwatch.org y describe la perdida de cobertura de los bosques secos tropicales de la región del Gran Chaco en Paraguay, Argentina y Bolivia.
+
+El monitoreo de la deforestación en el Gran Chaco se ha llevado a cabo por la organización [Guyra Paraguay](<http://www.guyra.org.py/index.php?lang=en>) desde el año 2011. Se utilizaron imágenes satelitales Landsat de 30 metros de resolución espacial. La interpretación de las zonas forestales bajo cambios de tipo de cobertura, se realiza a través de un análisis multitemporal. Este compara una imagen base de los últimos dos años y una imagen actual del mes en estudio. Los analistas utilizan técnicas de interpretación visual de tono, forma, tamaño, textura, patrón, sombra, y el contexto.
 
 ### Ejercicio 1
 
