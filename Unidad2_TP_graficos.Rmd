@@ -1,0 +1,196 @@
+---
+title: ' '
+output:
+  bookdown::html_document2: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(ggplot2)
+
+```
+
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("Fig/Diapositiva 2_TP.JPG")
+```
+
+# Ejercicios Unidad 2: Visualización de datos con ggplot2
+
+## Base de datos
+
+**Gran Chaco deforestación** 
+
+Archivo _chaco.xlsx_
+
+Esta base de datos se encuentra en http://data.globalforestwatch.org y describe la perdida de cobertura de los bosques secos tropicales de la región del Gran Chaco en Paraguay, Argentina y Bolivia.
+
+El monitoreo de la deforestación en el Gran Chaco se ha llevado a cabo por la organización [Guyra Paraguay](<http://www.guyra.org.py/index.php?lang=en>) desde el año 2011. Se utilizaron imágenes satelitales Landsat de 30 metros de resolución espacial. La interpretación de las zonas forestales bajo cambios de tipo de cobertura, se realiza a través de un análisis multitemporal. Este compara una imagen base de los últimos dos años y una imagen actual del mes en estudio. Los analistas utilizan técnicas de interpretación visual de tono, forma, tamaño, textura, patrón, sombra, y el contexto.
+
+
+### Ejercicio 1
+
+
+- Importe el archivo _chaco.xlsx_ como un data frame llamado **chaco**.
+- Describa los datos del data frame, identifique qué variables tiene y de qué tipo son. 
+- Cree la siguiente tabla y guardela como un data frame llamado **tabla**.
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(readxl)
+chaco <- read_excel("chaco.xlsx")
+library(flextable)
+library(dplyr)
+tabla<-group_by(chaco, pais,anio) %>% 
+summarise(Media=round(mean(sup, na.rm = T),2),
+          Desvio = round(sd(sup, na.rm = T),2), 
+          Suma=round(sum(sup, na.rm = T),2),
+          Maximo=round(max(sup, na.rm = T),2))
+
+t<-flextable(tabla)
+autofit(t)
+
+```
+
+
+### Ejercicio 2
+
+- Utilice la tabla creada en el punto anterior para reproducir el siguiente gráfico. Se trata de un gráfico de lineas (`geom_line()`) de los valores promedios de los países en los distintos años. 
+- Modifique el nombre le eje x (`xlab()`) y agreguele un titulo (`ggtitle( )`).
+
+
+```{r echo=FALSE,message=FALSE, warning=FALSE}
+library(ggplot2)
+ggplot(data=tabla, aes(anio, Media))+
+ geom_line()+facet_grid(pais~.)+xlab("año") + ggtitle("Promedio en el tiempo de supericie deforestada")
+
+```
+
+### Ejercicio 3
+
+- Dibuje un gráfico con un boxplot por cada país con los valores medios.
+- Elimine el grillado gris del fondo.
+- Escriba el titulo en azul con tamaño de letra 9, en negrita y justificado.
+
+
+Pista:
+
+ ` theme(plot.title = element_text(color = 'blue', face = 'bold', size = 9, hjust = 0.5))`
+
+
+```{r echo=FALSE,message=FALSE, warning=FALSE}
+library(ggplot2)
+p<-ggplot(data=tabla, aes(pais, Media))
+p+geom_boxplot()+theme_bw()+labs(title = "Boxplot")+
+  theme(plot.title = element_text(color = 'blue', face = 'bold', size = 9, hjust = 0.5))
+
+```
+
+### Ejercicio 4
+
+- Dibuje un gráfico con un boxplot de los coeficientes de variación por cada país.
+- Cambie el color del contorno a rojo.
+- Elimine el grillado gris del fondo
+
+```{r echo=FALSE,message=FALSE, warning=FALSE}
+library(ggplot2)
+p<-ggplot(data=tabla, aes(pais, Desvio/Media))
+p+geom_boxplot(colour="red")+ geom_jitter()+ theme_bw()
+```
+
+### Ejercicio 5
+
+Utilizando la tabla generadas por:
+
+```{r, echo=TRUE, eval=FALSE}
+
+tabla2 <- chaco %>% 
+  group_by(pais, anio, meses)%>% 
+  summarise(Media = round(mean(sup, na.rm = T),2))
+```
+
+
+Obtenga Histogramas y gráficos de densidad por países.
+
+```{r echo=FALSE,message=FALSE, warning=FALSE}
+tabla2<-group_by(chaco,pais,anio,meses)%>% 
+ summarise(Media=round(mean(sup, na.rm = T),2))
+ ggplot(data=tabla2,aes(Media, fill=pais)) + geom_histogram()
+ ggplot(data=tabla2, aes(Media,fill=pais)) + geom_density()
+```
+
+### Ejercicio 6
+
+Para las tablas obtenidas con este código: 
+
+```{r, echo=TRUE, eval=FALSE}
+
+valores.pais <- chaco %>% 
+  group_by(pais)%>%
+  summarise(Media = round(mean(sup, na.rm = T),2), 
+            Desvio = round(sd(sup, na.rm = T),2),
+            Suma=round(sum(sup, na.rm = T),2))`
+ 
+valores.anio <- chaco %>%
+  group_by(anio) %>%
+  summarise(Media = round(mean(sup, na.rm = T),2), 
+            Desvio = round(sd(sup, na.rm = T),2),
+            Suma = round(sum(sup, na.rm = T),2))`
+ 
+valores.anio.pais <- chaco %>%
+  group_by(anio, pais) %>%
+  summarise(Media = round(mean(sup, na.rm = T),2),
+            Desvio = round(sd(sup, na.rm = T),2),
+            Suma = round(sum(sup, na.rm = T),2))`
+
+
+```
+
+genere los siguientes gráficos:
+
+```{r echo=FALSE,message=FALSE, warning=FALSE}
+valores.pais<-group_by(chaco,pais)%>%
+ summarise(Media=round(mean(sup, na.rm = T),2), Desvio = round(sd(sup, na.rm = T),2), Suma=round(sum(sup, na.rm = T),2))
+
+ggplot(data=valores.pais, aes(pais, Media)) +
+  geom_col(fill="yellow") +theme_bw()
+
+valores.anio<-group_by(chaco,anio)%>%
+ summarise(Media=round(mean(sup, na.rm = T),2), Desvio = round(sd(sup, na.rm = T),2), Suma=round(sum(sup, na.rm = T),2))
+
+ggplot(data=valores.anio, aes(anio, Media)) +
+  geom_col(fill="violet") +theme_bw()
+
+valores.anio.pais<-group_by(chaco,anio, pais)%>%
+  summarise(Media=round(mean(sup, na.rm = T),2),
+  Desvio = round(sd(sup, na.rm = T),2), Suma=round(sum(sup, na.rm = T),2))
+
+ggplot(data=valores.anio.pais, aes(anio, Media)) +
+  geom_col(fill="blue")+facet_grid(pais~.)+theme_bw()
+
+```
+
+### Ejercicio 7
+
+Reproduzca el gráfico que observa a continuación, utilizando:
+
+- El data frame _chaco_
+- Las variables _anio_ y _sup_.
+- Las geometrías geom_jitter() y geom_point()
+
+Pista:
+
+Necesitará utilizar stat = "summary" para una de las geometrías. 
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+chaco %>%
+  filter(pais == "Bolivia") %>%
+  ggplot(aes(anio, sup)) +
+  geom_jitter() +
+  geom_point(stat = "summary", fun = mean, color = "red")
+
+```
+
